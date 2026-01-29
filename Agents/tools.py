@@ -2,7 +2,7 @@ import json
 from rank_bm25 import BM25Okapi
 
 class ResearchToolbox:
-    def __init__(self,json_path="C:\\Users\\sarth\\OneDrive\\Desktop\\debateRAG.ai\\debateRAG.ai\\pipeline\\processed_papers.json"):
+    def __init__(self,json_path="C:\\Users\\sarth\\OneDrive\\Desktop\\debateRAG.ai\\debateRAG.ai\\Agents\\processed_papers.json"):
         with open(json_path, 'r') as f:
             self.data = json.load(f)
         corpus = [chunk['content'].split(" ") for chunk in self.data]

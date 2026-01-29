@@ -1,11 +1,12 @@
 import google.generativeai as genai
 import os
-
-os.environ["GOOGLE_API_KEY"] = "YOUR_API_KEY"
-genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+from dotenv import load_dotenv
+load_dotenv()
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+genai.configure(api_key=GOOGLE_API_KEY)
 
 class Agent:
-    def __init__(self,name,model_name = "gemini-1.5-flash",instruction=""):
+    def __init__(self,name,model_name = "gemini-2.5-flash",instruction=""):
         self.name = name
         self.model = genai.GenerativeModel(
             model_name,
