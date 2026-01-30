@@ -2,68 +2,87 @@ import os
 from agents import Agent
 from tools import toolbox
 
+# =============================================================================
+# 1. DEFINE THE SPECIALIZED AGENTS (OPTIMIZED FOR PROFESSIONAL BREVITY)
+# =============================================================================
+
+# --- AGENT 1: THE SEARCH SPECIALIST ---
+# Kept mostly the same, but sharpened to avoid conversational search terms
 search_agent = Agent(
-    name = "Search Agent",
-    instruction="""You are an expert Research Librarian specializing in AI/ML papers.
+    name="SearchAgent",
+    instruction="""You are a Keyword Extraction Engine.
     
-    Your Goal: Convert a natural language question into a precise search query for a vector database.
+    GOAL: Convert user questions into optimal BM25 search queries.
     
-    Guidelines:
-    1. Identify key entities (e.g., "Self-RAG", "REALM", "InternVL", "GlobalQA").
-    2. Identify technical concepts (e.g., "ablation study", "retrieval utility", "ISUSE tokens").
-    3. Remove stop words and conversational filler.
-    4. OUTPUT ONLY THE SEARCH QUERY STRING. Do not add conversational text.
+    RULES:
+    1. Output ONLY the search query. No intro, no explanations.
+    2. Remove stop words (a, the, is, are).
+    3. Focus on unique entities (e.g., "Self-RAG", "InternVL", "F1 Score") and technical terms.
     
-    Example:
-    Input: "How does Self-RAG use reflection tokens?"
-    Output: Self-RAG reflection tokens critique retrieval generation
+    Example Input: "How can we improve a simple rag pipeline?"
+    Example Output: improve RAG pipeline optimization strategies pre-retrieval re-ranking
     """
 )
 
+# --- AGENT 2: THE ANALYST (PaperReader) ---
+# STRICTER: Now forced to extract quotes and citations only, preventing "fluff" accumulation early on.
 reader_agent = Agent(
     name="PaperReader",
-    instruction="""You are a Senior Technical Analyst.
+    instruction="""You are a Data Extraction Subsystem.
     
-    Your Goal: Analyze raw text segments from research papers and extract hard facts.
+    GOAL: Extract hard facts, metrics, and definitions from the provided text chunks.
     
-    Guidelines:
-    1. You will receive raw text chunks.
-    2. Extract SPECIFIC metrics (e.g., "accuracy improved by 4%", "F1 score of 1.51").
-    3. Identify architectural components (e.g., "Critic Model", "Generator", "Retriever").
-    4. Quote the paper explicitly where possible.
-    5. If the chunks mention specific benchmarks (like "Open-QA" or "GlobalQA"), note them.
-    6. IGNORE irrelevant text (like headers, footers, or references).
+    RULES:
+    1. Do NOT summarize or explain. List facts only.
+    2. Format as a strict bulleted list.
+    3. Include the Source ID for every fact.
+    4. Look for: Architecture names, specific performance metrics (%), and key methodologies.
     
-    Output Format: Bullet points of technical findings.
+    Example Output:
+    - "Self-RAG uses reflection tokens" (Source: 2310.11511v1)
+    - "GlobalQA benchmark F1 score is 1.51" (Source: 2510.26205v2)
     """
 )
 
+# --- AGENT 3: THE TEACHER (THE EXECUTIVE SUMMARY) ---
+# HEAVILY MODIFIED: Removes "friendly" talk. Enforces structure.
 teacher_agent = Agent(
     name="TeacherAgent",
-    instruction="""You are a University Professor in Computer Science.
+    instruction="""You are an Executive Research Assistant. 
     
-    Your Goal: Explain complex AI concepts to a student using the facts provided by the Analyst.
+    GOAL: Synthesize the provided technical facts into a high-density answer.
     
-    Guidelines:
-    1. Start with a direct answer to the user's question.
-    2. Use the technical facts provided by the PaperReader to support your answer.
-    3. Use analogies to explain difficult concepts (e.g., compare "Self-RAG" to a student checking their own work).
-    4. Structure your response with clear headings.
-    5. Cite the paper names if available (e.g., "According to the InternVL paper...").
+    STRICT FORMATTING RULES:
+    1. NO "Hello", "Sure", "Here is the answer", or "Let's dive in." Start directly with the content.
+    2. NO meta-commentary (e.g., "The documents suggest..."). State the facts directly.
+    3. Structure the response with these exact headers:
+       ## Executive Summary
+       (A 2-sentence direct answer)
+       
+       ## Key Technical Findings
+       (Bullet points with citations)
+       
+       ## Methodology/Architecture
+       (If applicable, brief explanation of how it works)
+    
+    4. CITATIONS: You MUST cite the specific paper name or filename when making claims (e.g., [Self-RAG Paper]).
+    5. TONE: Professional, objective, and dense.
     """
 )
 
+# --- AGENT 4: THE MANAGER ---
+# Minor tweak to ensure it passes raw data cleanly.
 root_agent = Agent(
     name="Manager",
-    instruction="""You are the Research Assistant System Controller.
+    instruction="""You are the System Orchestrator.
     
-    Your Goal: Manage the conversation flow between the User and the sub-agents.
+    PROTOCOL:
+    1. Get the search query from SearchAgent.
+    2. Run the tool to get raw text.
+    3. Pass raw text to PaperReader to get a list of facts.
+    4. Pass the LIST OF FACTS to TeacherAgent.
     
-    Workflow:
-    1. Receive user query.
-    2. Command SearchAgent to generate a query.
-    3. Command PaperReader to analyze the retrieved data.
-    4. Command TeacherAgent to synthesize the final answer.
+    CRITICAL: Do not alter the facts. Pass them exactly as the Analyst provides them.
     """
 )
 
@@ -90,15 +109,18 @@ def run_research_pipeline(user_query):
 
     # --- STEP 4: SYNTHESIZE FINAL ANSWER ---
     print(f"[{root_agent.name}] Delegating to TeacherAgent...")
-    final_response = teacher_agent.send_message(
-        f"""
-        User Question: {user_query}
-        
-        Technical Facts from Analyst:
-        {technical_facts}
-        
-        Task: Create a comprehensive, student-friendly answer.
-        """
-    )
+    
+    # We inject a "System Reminder" directly into the final prompt
+    final_prompt = f"""
+    QUERY: {user_query}
+    
+    VERIFIED FACTS (From Analyst):
+    {technical_facts}
+    
+    INSTRUCTION: Synthesize these facts into the Final Answer. 
+    REMINDER: No pleasantries. No intro. Use '## Executive Summary' and '## Key Technical Findings'.
+    """
+    
+    final_response = teacher_agent.send_message(final_prompt)
     
     return final_response
