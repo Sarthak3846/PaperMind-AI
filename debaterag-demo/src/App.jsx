@@ -593,20 +593,7 @@ const ArchitectureSection = () => {
   );
 };
 
-const Footer = () => (
-  <footer className="py-12 px-6 border-t border-white/5 bg-[#05050A]">
-    <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-      <div className="text-gray-500 text-sm">
-        © 2024 DebateRAG Research Group. MIT License.
-      </div>
-      <div className="flex gap-6">
-        <a href="#" className="text-gray-500 hover:text-white text-sm transition-colors">Documentation</a>
-        <a href="#" className="text-gray-500 hover:text-white text-sm transition-colors">GitHub</a>
-        <a href="#" className="text-gray-500 hover:text-white text-sm transition-colors">Paper</a>
-      </div>
-    </div>
-  </footer>
-);
+
 
 function App() {
   return (
@@ -616,7 +603,6 @@ function App() {
       <PipelineSection />
       <ArchitectureSection />
       <DemoInterface />
-      <Footer />
     </div>
   );
 }
