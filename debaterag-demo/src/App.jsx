@@ -235,15 +235,16 @@ const DemoInterface = () => {
   const simulateExecution = (userQuery) => {
     const steps = [
       { agent: "Manager", message: `Received Query: "${userQuery}"`, color: "text-purple-400" },
-      { agent: "Manager", message: "Delegating to SearchAgent...", color: "text-purple-400" },
-      { agent: "SearchAgent", message: "Analyzing query entities & intent...", color: "text-blue-400" },
-      { agent: "SearchAgent", message: `Generated keywords: "${userQuery.split(' ').slice(0,3).join(' ')}..."`, color: "text-blue-400" },
-      { agent: "Toolbox", message: "Searching Vector Database (BM25)...", color: "text-yellow-400" },
-      { agent: "Toolbox", message: "Retrieved 5 relevant chunks from Knowledge Base.", color: "text-yellow-400" },
-      { agent: "PaperReader", message: "Reading raw text for metrics and facts...", color: "text-orange-400" },
-      { agent: "PaperReader", message: "Extracted technical facts & citations.", color: "text-orange-400" },
-      { agent: "Teacher", message: "Synthesizing student-friendly explanation...", color: "text-emerald-400" },
-      { agent: "System", message: "Final Answer Ready.", color: "text-white" }
+      { agent: "SearchAgent", message: "Delegating to Recall Specialist...", color: "text-blue-400" },
+      { agent: "Recall", message: "Fetching raw context from Vector DB...", color: "text-yellow-400" },
+      { agent: "Precision", message: "Extracting candidate facts...", color: "text-emerald-400" },
+      // --- NEW STEPS ---
+      { agent: "Critic", message: "REVIEWING FACTS FOR HALLUCINATIONS...", color: "text-red-400 font-bold" },
+      { agent: "Critic", message: "Cross-referencing sources for contradictions...", color: "text-red-400" },
+      { agent: "Critic", message: "Debate complete. Validating evidence.", color: "text-red-400" },
+      // ----------------
+      { agent: "Teacher", message: "Synthesizing Final Verdict...", color: "text-purple-400" },
+      { agent: "System", message: "Response Ready.", color: "text-white" }
     ];
 
     let delay = 0;
