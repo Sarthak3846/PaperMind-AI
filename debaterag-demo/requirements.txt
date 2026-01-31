@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+google-generativeai
+rank_bm25
+pydantic
+python-multipart

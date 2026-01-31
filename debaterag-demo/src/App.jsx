@@ -268,7 +268,7 @@ const DemoInterface = () => {
 
     try {
       // 2. Real Backend Call
-      const response = await fetch('http://localhost:8000/api/research', {
+      const response = await fetch('/api/research', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: query })

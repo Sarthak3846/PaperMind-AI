@@ -8,12 +8,11 @@ app = FastAPI()
 # Allow your React app (usually running on localhost:5173) to talk to this API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins (simplest for development)
+    allow_origins=["*"], # Keep this open for now to prevent Vercel errors
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # Define the data format we expect from the frontend
 class QueryRequest(BaseModel):
     query: str
@@ -29,7 +28,3 @@ async def research_endpoint(request: QueryRequest):
         print(f"Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-if __name__ == "__main__":
-    import uvicorn
-    # Run the server on port 8000
-    uvicorn.run(app, host="0.0.0.0", port=8000)
