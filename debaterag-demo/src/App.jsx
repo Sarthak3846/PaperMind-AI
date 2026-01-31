@@ -129,9 +129,12 @@ const Navbar = () => (
         <a href="#demo" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">Demo</a>
       </div>
 
-      <button className="hidden md:flex bg-white text-black px-6 py-2.5 rounded-full text-sm font-bold hover:bg-gray-200 transition-colors">
-        Run Demo
-      </button>
+      <a 
+  href="#demo" 
+  className="hidden md:flex bg-white text-black px-6 py-2.5 rounded-full text-sm font-bold hover:bg-gray-200 transition-colors"
+>
+  Run Demo
+</a>
     </div>
   </nav>
 );
@@ -167,9 +170,12 @@ const Hero = () => (
           <a href="#demo" className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full text-white font-semibold hover:opacity-90 transition-opacity shadow-lg shadow-indigo-900/50">
             Try a Query
           </a>
-          <button className="px-8 py-4 bg-white/5 border border-white/10 rounded-full text-white font-semibold hover:bg-white/10 transition-colors">
-            View Architecture
-          </button>
+          <a 
+  href="#architecture" 
+  className="px-8 py-4 bg-white/5 border border-white/10 rounded-full text-white font-semibold hover:bg-white/10 transition-colors"
+>
+  View Architecture
+</a>
         </div>
       </div>
 
