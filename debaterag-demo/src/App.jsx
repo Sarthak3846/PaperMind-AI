@@ -268,7 +268,8 @@ const DemoInterface = () => {
 
     try {
       // 2. Real Backend Call
-      const response = await fetch('/api/research', {
+      // NEW (Direct link to Render)
+        const response = await fetch('https://debaterag-ai.onrender.com/api/research', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: query })
