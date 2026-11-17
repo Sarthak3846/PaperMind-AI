@@ -1,7 +1,7 @@
-# DebateRAG.ai  
+# PaperMind AI 
 **A Multi-Agent Research Assistant using Retrieval-Augmented Generation (RAG)**
 
-DebateRAG.ai is an experimental research assistant that explores how **explicit multi-agent coordination** can improve reasoning over academic literature. Instead of relying on a single, monolithic RAG pipeline, the system decomposes retrieval, verification, critique, and synthesis into clearly defined agent roles.
+PaperMind AI is a multi-agent research assistant that explores how **explicit multi-agent coordination** can improve reasoning over academic literature. Instead of relying on a single, monolithic RAG pipeline, the system decomposes retrieval, verification, critique, and synthesis into clearly defined agent roles.
 
 The goal of this project is not to “know everything,” but to reason **accurately, transparently, and inspectably** over a bounded corpus of research papers.
 
@@ -11,11 +11,11 @@ The goal of this project is not to “know everything,” but to reason **accura
 
 Traditional RAG pipelines typically follow a fixed retrieve-then-generate pattern. While effective for simple queries, this approach can break down for complex, multi-faceted research questions where evidence must be compared, validated, and synthesized carefully.
 
-This project is inspired by the **MA-RAG** paper, which proposes using multiple agents with specialized responsibilities to coordinate retrieval and reasoning. DebateRAG.ai implements this idea end-to-end in a practical research assistant setting.
+This project is inspired by the **MA-RAG** paper, which proposes using multiple agents with specialized responsibilities to coordinate retrieval and reasoning. 	PaperMind AI implements this idea end-to-end in a practical research assistant setting.
 
 ---
 
-## What DebateRAG.ai Does
+## What PaperMind AI Does
 
 - Answers research questions over a **curated academic corpus**
 - Enforces **evidence-first reasoning**
@@ -27,7 +27,7 @@ This project is inspired by the **MA-RAG** paper, which proposes using multiple 
 
 ## System Overview
 
-DebateRAG.ai operates as a bounded research assistant over a fixed set of papers.
+	PaperMind AI operates as a bounded research assistant over a fixed set of papers.
 
 ### High-level workflow
 
@@ -76,7 +76,7 @@ Dense retrieval (e.g., FAISS + embeddings) is planned as a future extension.
 
 ## Observability
 
-One of the core design goals of DebateRAG.ai is **interpretability**.
+One of the core design goals of PaperMind AI is **interpretability**.
 
 The system exposes:
 - Agent-by-agent execution logs
