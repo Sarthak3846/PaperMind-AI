@@ -1,6 +1,6 @@
 // Thin client for the PaperMind backend. The execution log shown in the UI is built
 // ONLY from events streamed by the server (Server-Sent Events); nothing is simulated.
-export const API_BASE = (import.meta.env.VITE_API_BASE || 'http://localhost:8000').replace(/\/$/, '')
+export const API_BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
 
 async function jsonOrThrow(res) {
   if (res.ok) return res.json()
