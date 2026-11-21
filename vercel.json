@@ -1,22 +1,35 @@
 
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "cd code/frontend && npm ci && npm run build",
-  "outputDirectory": "code/frontend/dist",
-  "functions": {
-    "api/index.py": {
-      "maxDuration": 60,
-      "includeFiles": "{code/backend/**,prompts/**,DATASET/**}"
+  "services": {
+    "papermind-ai-backend": {
+      "root": "code/backend",
+      "framework": "fastapi",
+      "entrypoint": "app.main:app"
+    },
+    "frontend": {
+      "root": "code/frontend",
+      "framework": "vite"
     }
   },
   "rewrites": [
     {
+      "source": "/api",
+      "destination": {
+        "service": "papermind-ai-backend"
+      }
+    },
+    {
       "source": "/api/(.*)",
-      "destination": "/api/index.py"
+      "destination": {
+        "service": "papermind-ai-backend"
+      }
     },
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": {
+        "service": "frontend"
+      }
     }
   ]
 }
