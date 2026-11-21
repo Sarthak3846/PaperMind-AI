@@ -42,7 +42,7 @@ def get_settings() -> Settings:
         data_dir=data_dir,
         processed_dir=data_dir / "processed",
         manifest_path=data_dir / "papers_manifest.json",
-        prompts_dir=REPO_ROOT / "prompts",
+        prompts_dir=BACKEND_DIR / "prompts",
         prompt_version=os.getenv("PROMPT_VERSION", "final").strip() or "final",
         gemini_api_key=(os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "").strip(),
         gemini_model=os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite").strip(),
