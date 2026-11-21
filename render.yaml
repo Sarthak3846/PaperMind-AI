@@ -1,0 +1,21 @@
+# Render blueprint for the backend. Create the service from this file (New > Blueprint),
+# then set GEMINI_API_KEY in the Render dashboard. NEVER put the key in this file.
+services:
+  - type: web
+    name: papermind-ai-backend
+    runtime: python
+    rootDir: code/backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash-lite
+      - key: PROMPT_VERSION
+        value: final
+      - key: CORS_ORIGINS
+        value: https://YOUR-VERCEL-APP.vercel.app,http://localhost:5173

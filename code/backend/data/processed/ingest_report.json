@@ -1,0 +1,99 @@
+{
+  "dataset_dir": "DATASET",
+  "papers": [
+    {
+      "paper_id": "realm2020",
+      "filename": "2002.08909v1.pdf",
+      "title": "REALM: Retrieval-Augmented Language Model Pre-Training",
+      "authors": "Guu et al.",
+      "year": 2020,
+      "url": "https://arxiv.org/abs/2002.08909",
+      "pages": 12,
+      "chunks": 68,
+      "sha256": "0ec1a7ab3de5514c6d3baa8af0322816d4ee7cd4c14b9f2c450cbc9da9e6b363",
+      "empty_pages": 0
+    },
+    {
+      "paper_id": "selfrag2023",
+      "filename": "2310.11511v1.pdf",
+      "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+      "authors": "Asai et al.",
+      "year": 2023,
+      "url": "https://arxiv.org/abs/2310.11511",
+      "pages": 30,
+      "chunks": 148,
+      "sha256": "d9eaa1398abac0df67a9d0933a5bf8b6d9d83d2e72da2a486073cd842dd52978",
+      "empty_pages": 0
+    },
+    {
+      "paper_id": "rag_survey_gao2023",
+      "filename": "2312.10997v5.pdf",
+      "title": "Retrieval-Augmented Generation for Large Language Models: A Survey",
+      "authors": "Gao et al.",
+      "year": 2023,
+      "url": "https://arxiv.org/abs/2312.10997",
+      "pages": 21,
+      "chunks": 152,
+      "sha256": "396a0fadeb4cd40f5c8ccc36b73a0815f6cb4d7f6bfa53b6c48c1f9aba7c7e02",
+      "empty_pages": 0
+    },
+    {
+      "paper_id": "rag_survey_gupta2024",
+      "filename": "2410.12837v1.pdf",
+      "title": "A Comprehensive Survey of Retrieval-Augmented Generation (RAG): Evolution, Current Landscape and Future Directions",
+      "authors": "Gupta et al.",
+      "year": 2024,
+      "url": "https://arxiv.org/abs/2410.12837",
+      "pages": 18,
+      "chunks": 77,
+      "sha256": "0e0ea3430c2cba9a8f5dd06e17581e7cdaa42184130b69ff733a5ff9fc6a37db",
+      "empty_pages": 0
+    },
+    {
+      "paper_id": "globalrag2025",
+      "filename": "2510.26205v2.pdf",
+      "title": "Towards Global Retrieval Augmented Generation: A Benchmark for Corpus-Level Reasoning",
+      "authors": "Luo et al.",
+      "year": 2025,
+      "url": "https://arxiv.org/abs/2510.26205",
+      "pages": 13,
+      "chunks": 70,
+      "sha256": "a0c32e439c94e3b83104a3709a25cb155ed6f39e97c7d2bc1784fa3693fedc5f",
+      "empty_pages": 0
+    },
+    {
+      "paper_id": "rag_lewis2020",
+      "filename": "NeurIPS-2020-retrieval-augmented-generation-for-knowledge-intensive-nlp-tasks-Paper.pdf",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "authors": "Lewis et al.",
+      "year": 2020,
+      "url": "https://arxiv.org/abs/2005.11401",
+      "pages": 16,
+      "chunks": 84,
+      "sha256": "720f67eb41aa49995d5fcf3d24ac7efe431fbe08ce109b14b5a9fa4d4ebe2f8b",
+      "empty_pages": 0
+    },
+    {
+      "paper_id": "rag_ssrn",
+      "filename": "ssrn-5252835.pdf",
+      "title": "RAG: The Revolution of Retrieval-Augmented Text Generation",
+      "authors": null,
+      "year": null,
+      "url": "https://ssrn.com/abstract=5252835",
+      "pages": 26,
+      "chunks": 115,
+      "sha256": "89bf5572390797c7d0936e52a26c83c4c6e00b6d54f8cdc9b22888be3d86d148",
+      "empty_pages": 0
+    }
+  ],
+  "skipped": [],
+  "warnings": [
+    "rag_ssrn: missing metadata field 'authors'",
+    "rag_ssrn: missing metadata field 'year'"
+  ],
+  "totals": {
+    "papers": 7,
+    "chunks": 714,
+    "reference_chunks": 62
+  }
+}

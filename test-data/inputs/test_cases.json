@@ -1,0 +1,76 @@
+[
+  {"id": "T01", "type": "Normal", "title": "Single-paper question (Self-RAG)",
+   "request": {"question": "What problem does Self-RAG address and how does it work?"},
+   "expected": "Completed run; Self-RAG analysed; structured review with page-level citations; at most 20% of checked claims unsupported.",
+   "checks": {"status": "completed", "min_papers_analyzed": 1, "min_review_statements": 5, "all_citations_exist": true, "max_unsupported_ratio": 0.2}},
+
+  {"id": "T02", "type": "Normal", "title": "Methodology of one named paper (comparison must be skipped)",
+   "request": {"question": "Summarize the methodology of the original RAG paper by Lewis et al.", "paper_ids": ["rag_lewis2020"]},
+   "expected": "Completed run with exactly one analysed paper; comparison skipped with an explanation; all citations point to the selected paper.",
+   "checks": {"status": "completed", "min_papers_analyzed": 1, "comparison_skipped": true, "citations_within_selection": true, "all_citations_exist": true}},
+
+  {"id": "T03", "type": "Normal", "title": "Cross-paper comparison (REALM vs original RAG)",
+   "request": {"question": "Compare how REALM and the original RAG paper by Lewis et al. integrate retrieval into language models", "paper_ids": ["realm2020", "rag_lewis2020"]},
+   "expected": "Both papers analysed; comparison table with methodology row; similarities and differences cited to both papers.",
+   "checks": {"status": "completed", "min_papers_analyzed": 2, "comparison_present": true, "comparison_has_table": true, "all_citations_exist": true}},
+
+  {"id": "T04", "type": "Normal", "title": "Cross-paper comparison (two surveys)",
+   "request": {"question": "Compare the retrieval and evaluation approaches discussed in the two RAG surveys", "paper_ids": ["rag_survey_gao2023", "rag_survey_gupta2024"]},
+   "expected": "Both surveys analysed; comparison present; differences or similarities listed with citations.",
+   "checks": {"status": "completed", "min_papers_analyzed": 2, "comparison_present": true, "comparison_has_findings": true, "all_citations_exist": true}},
+
+  {"id": "T05", "type": "Normal", "title": "Research-gap identification",
+   "request": {"question": "What research gaps exist in evaluating retrieval-augmented generation systems?"},
+   "expected": "At least one gap, each labelled explicit or inferred and tied to papers; scope disclaimer present (no global novelty claim).",
+   "checks": {"status": "completed", "has_gaps": true, "gaps_scoped": true, "all_citations_exist": true}},
+
+  {"id": "T06", "type": "Normal", "title": "Contradictory or differing findings",
+   "request": {"question": "Do these papers agree on when a model should retrieve: always, or only when needed?", "paper_ids": ["selfrag2023", "rag_lewis2020", "realm2020"]},
+   "expected": "Comparison separates real contradictions from differences caused by different settings; at least one difference or contradiction reported.",
+   "checks": {"status": "completed", "min_papers_analyzed": 2, "comparison_present": true, "comparison_has_findings": true, "all_citations_exist": true}},
+
+  {"id": "T07", "type": "Normal", "title": "Full literature review request",
+   "request": {"question": "Write a literature review on how retrieval-augmented generation reduces hallucination in language models"},
+   "expected": "All review sections populated; at least two paper summaries; references list with page numbers.",
+   "checks": {"status": "completed", "min_review_statements": 8, "min_paper_summaries": 2, "has_references": true, "max_unsupported_ratio": 0.25}},
+
+  {"id": "T08", "type": "Edge", "title": "Question outside the corpus (cooking)",
+   "request": {"question": "How do I bake sourdough bread at home?"},
+   "expected": "status insufficient_evidence; no review generated; no more than one model call (query understanding).",
+   "checks": {"status": "insufficient_evidence", "no_review": true, "max_llm_calls": 1}},
+
+  {"id": "T09", "type": "Edge", "title": "Single-acronym ambiguous question",
+   "request": {"question": "RAG"},
+   "expected": "No crash. Either a general overview or insufficient_evidence; the ambiguity is noted by query understanding.",
+   "checks": {"status_in": ["completed", "insufficient_evidence"], "ambiguity_noted": true}},
+
+  {"id": "T10", "type": "Edge", "title": "Hinglish (non-English) question",
+   "request": {"question": "RAG hallucination kaise kam karta hai?"},
+   "expected": "Keywords translated to English; relevant passages retrieved; run completes or reports insufficient evidence without crashing.",
+   "checks": {"status_in": ["completed", "insufficient_evidence"], "retrieval_has_hits": true}},
+
+  {"id": "T11", "type": "Edge", "title": "Selected paper does not cover the topic",
+   "request": {"question": "How are reflection tokens used to critique generations?", "paper_ids": ["globalrag2025"]},
+   "expected": "Either insufficient_evidence or a cautious answer whose every citation belongs to the selected paper (no leakage from other papers).",
+   "checks": {"status_in": ["completed", "insufficient_evidence"], "citations_within_selection": true}},
+
+  {"id": "T12", "type": "Edge", "title": "Academic question from another field (modal logic)",
+   "request": {"question": "What is the finite frame property in modal logic?"},
+   "expected": "status insufficient_evidence; no fabricated answer.",
+   "checks": {"status": "insufficient_evidence", "no_review": true}},
+
+  {"id": "T13", "type": "Invalid", "title": "Empty question",
+   "request": {"question": ""},
+   "expected": "HTTP 422 with a clear message; no model call.",
+   "checks": {"http_status": 422}},
+
+  {"id": "T14", "type": "Invalid", "title": "Question longer than 1000 characters",
+   "request": {"question": "retrieval augmented generation. ", "_repeat_to_chars": 1100},
+   "expected": "HTTP 422; no model call.",
+   "checks": {"http_status": 422}},
+
+  {"id": "T15", "type": "Invalid", "title": "Unknown paper id selected",
+   "request": {"question": "What is retrieval-augmented generation?", "paper_ids": ["not_a_paper"]},
+   "expected": "HTTP 400 listing the unknown id; no model call.",
+   "checks": {"http_status": 400}}
+]
